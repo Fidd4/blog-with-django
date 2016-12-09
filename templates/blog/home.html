@@ -7,7 +7,7 @@
             <dt>{{ post.posted|date:"d M Y" }}</dt>
             <dd>
                 <strong><a href="{% url 'post-detail' post.id %}">{{ post.title_post }}</a></strong> 
-                {% if post.draft %}<span style="color: red;">Не опубликовано</span>{% endif %} 
+                {% if not post.draft %}<span style="color: red;">Не опубликовано</span>{% endif %} 
                 {% if post.posted > today %}<span style="color: green;">Авоматическая публикация</span>{% endif %}
             </dd>
             <dd>{{ post.preview|safe }}</dd>

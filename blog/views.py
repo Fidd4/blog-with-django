@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.urlresolvers import reverse_lazy
@@ -38,7 +39,7 @@ def index(request):
 def post_detail(request, pk):
     """ Страница с детальной информацией о посте. """
     post = get_object_or_404(Post, pk=pk)
-    if post.posted > timezone.now().date() or post.draft:
+    if post.posted > timezone.now().date() or not post.draft:
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     return render(request, 'blog/post_detail.html', {'post': post})

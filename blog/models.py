@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -10,7 +10,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class StatusManager(models.Manager):
     def active(self, *args, **kwargs):
-        return super(StatusManager, self).filter(draft=False).filter(posted__lte=timezone.now())
+        return super(StatusManager, self).filter(draft=True).filter(posted__lte=timezone.now())
 
 
 class Tag(models.Model):
@@ -46,11 +46,11 @@ class Post(models.Model):
         max_length=200,
         unique=True,
     )
-    draft = models.BooleanField(verbose_name=u"Не публиковать", default=False)
+    draft = models.BooleanField(verbose_name=u"Опубликовано", default=True)
     preview = RichTextUploadingField(verbose_name=u"Превью")
     text = RichTextUploadingField(verbose_name=u"Полная статья")
     posted = models.DateField(
-        verbose_name=u"Дата публикации (пример: 01.01.2016)",
+        verbose_name=u"Дата публикации",
         auto_now=False,
         auto_now_add=False,
     )
