@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}Добавление тега{% endblock %}
+
+
+{% block content %}
+    <h4>Добавить тег</h4>
+
+    <form id="tag_form" method="POST" action="">
+        {% csrf_token %}
+        {% bootstrap_form form layout="inline" %}
+        <input class="btn btn-default btn-success" type="submit" name="submit" value="Создать тег" />
+    </form>
+{% endblock %}

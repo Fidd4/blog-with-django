@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for post in post_paginator %}
+        <dl class="dl-horizontal">
+
+            <dt>{{ post.posted|date:"d M Y" }}</dt>
+            <dd>
+                <strong><a href="{% url 'post-detail' post.id %}">{{ post.title_post }}</a></strong> 
+                {% if post.draft %}<span style="color: red;">Не опубликовано</span>{% endif %} 
+                {% if post.posted > today %}<span style="color: green;">Авоматическая публикация</span>{% endif %}
+            </dd>
+            <dd>{{ post.preview|safe }}</dd>
+        </dl>
+    {% endfor %}
+
+    {% for num in post_paginator.paginator.page_range %}
+        <ul class="pagination">
+            {% ifequal num post_paginator.number %}
+                <li class="disabled">
+                    <span aria-hidden="true">{{ num }}</span>
+                </li>
+            {% else %}
+                <li><a href="?page={{ num }}"> {{ num }}</a></li>
+            {% endifequal %}
+        </ul>
+    {% endfor %}
+{% endblock %}

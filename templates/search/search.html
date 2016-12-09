@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Поиск по материалам{% endblock %}
+
+
+{% block content %}
+    <h3>Поиск</h3>
+
+    <form method="get" action=".">
+        <div class="form-group">
+            <input type="search" name="q">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" type="submit">Искать</button>
+        </div>
+
+        </br>
+
+        <h4>Результат поиска:</h4>
+        {% for result in page.object_list %}
+            <p>
+                <a href="/post/{{ result.object.id }}">{{ result.object.title_post }}</a>
+            </p>
+        {% empty %}
+            <p>Ничего не найдено.</p>
+        {% endfor %}
+    </form>
+{% endblock %}

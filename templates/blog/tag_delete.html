@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Удаление тега{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Вы уверены что хотите удалить тег <strong>{{ object }}</strong>?</p>
+        <input class="btn btn-default btn-success" type="submit" value="Удалить" />
+    </form>
+{% endblock %}

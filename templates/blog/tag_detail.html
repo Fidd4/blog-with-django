@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ tag.title }} - все материалы{% endblock %}
+{% block desc %}{{ tag.description }}{% endblock %}
+{% block keyword %}{{ tag.keywords }}{% endblock %}
+
+
+{% block content %}
+    {% if user.is_superuser %}
+        <div class="pull-right">
+            <a class="btn btn-default" role="button" href="{% url 'update-tag' slug=tag.slug %}">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Изменить
+            </a>
+            <a class="btn btn-default" role="button" href="{% url 'delete-tag' slug=tag.slug %}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Удалить
+            </a>
+        </div>
+    {% endif %}
+
+    <h4 style="margin-bottom: 30px;"># {{ tag.title }}</h4>
+
+    {% if posts %}
+        {% for post in posts%}
+            <dl class="dl-horizontal">
+                <dt>{{ post.posted|date:"d M Y" }}</dt>
+                <dd>
+                    <strong><a href="{% url 'post-detail' post.id %}">{{ post.title_post }}</a></strong> 
+                    {% if post.draft %}<span style="color: red;">Не опубликовано</span>{% endif %} 
+                    {% if post.posted > today %}<span style="color: green;">Авоматическая публикация</span>{% endif %}
+                </dd>
+                <dd>{{ post.preview|safe }}</dd>
+            </dl>
+        {% endfor %}
+    {% else %}
+        <p>Материалов нет.</p>
+    {% endif %}
+{% endblock %}

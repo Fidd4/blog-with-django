@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    {% if post.title_page %}
+        {{ post.title_page }}
+    {% else %}
+        {{ post.title_post }}
+    {% endif %}
+{% endblock %}
+
+{% block desc %}{{ post.description }}{% endblock %}
+{% block keyword %}{{ post.keywords }}{% endblock %}
+
+
+{% block content %}
+    {% if user.is_superuser %}
+        <div class="pull-right">
+            <a class="btn btn-default" role="button" href="{% url 'update-post' pk=post.id %}">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Изменить
+            </a>
+            <a class="btn btn-default" role="button" href="{% url 'delete-post' pk=post.id %}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Удалить
+            </a>
+        </div>
+    {% endif %}
+
+    <dl class="dl-horizontal">
+        <dt>{{ post.posted|date:"d M Y" }}</dt>
+        <dd><strong>{{ post.title_post }}</strong></dd>
+        <dd>{{ post.text|safe }}</dd>
+    </dl>
+{% endblock %}
